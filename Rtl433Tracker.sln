@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker", "Rtl433Tracker\Rtl433Tracker.csproj", "{C85AFFCF-E356-4D67-925F-2E0726F9B358}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Web", "Rtl433Tracker.Web\Rtl433Tracker.Web.csproj", "{C85AFFCF-E356-4D67-925F-2E0726F9B358}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Api", "Rtl433Tracker.Api\Rtl433Tracker.Api.csproj", "{94A6E5DE-079A-49B0-8AB7-88C563A6CE81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C85AFFCF-E356-4D67-925F-2E0726F9B358}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C85AFFCF-E356-4D67-925F-2E0726F9B358}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C85AFFCF-E356-4D67-925F-2E0726F9B358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A6E5DE-079A-49B0-8AB7-88C563A6CE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A6E5DE-079A-49B0-8AB7-88C563A6CE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A6E5DE-079A-49B0-8AB7-88C563A6CE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A6E5DE-079A-49B0-8AB7-88C563A6CE81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
