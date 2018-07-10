@@ -11,5 +11,9 @@ namespace Rtl433Tracker.Data
         }
 
         public DbSet<Device> Devices { get; set; }
+
+        public DbSet<Event> Events { get; set; }
+
+        public DbSet<EventData> EventData { get; set; }
     }
 }

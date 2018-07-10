@@ -9,7 +9,7 @@ using Rtl433Tracker.Data;
 namespace Rtl433Tracker.Data.Migrations
 {
     [DbContext(typeof(Rtl433TrackerContext))]
-    [Migration("20180710205010_Initial")]
+    [Migration("20180710214403_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace Rtl433Tracker.Data.Migrations
 
                     b.HasIndex("DeviceId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Rtl433Tracker.Data.Models.EventData", b =>

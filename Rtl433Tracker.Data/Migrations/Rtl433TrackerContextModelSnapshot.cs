@@ -45,7 +45,7 @@ namespace Rtl433Tracker.Data.Migrations
 
                     b.HasIndex("DeviceId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Rtl433Tracker.Data.Models.EventData", b =>

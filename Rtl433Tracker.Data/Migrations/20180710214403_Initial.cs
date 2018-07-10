@@ -21,7 +21,7 @@ namespace Rtl433Tracker.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -30,9 +30,9 @@ namespace Rtl433Tracker.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Event_Devices_DeviceId",
+                        name: "FK_Events_Devices_DeviceId",
                         column: x => x.DeviceId,
                         principalTable: "Devices",
                         principalColumn: "Id",
@@ -52,22 +52,22 @@ namespace Rtl433Tracker.Data.Migrations
                 {
                     table.PrimaryKey("PK_EventData", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventData_Event_EventId",
+                        name: "FK_EventData_Events_EventId",
                         column: x => x.EventId,
-                        principalTable: "Event",
+                        principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_DeviceId",
-                table: "Event",
-                column: "DeviceId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EventData_EventId",
                 table: "EventData",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Events_DeviceId",
+                table: "Events",
+                column: "DeviceId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -76,7 +76,7 @@ namespace Rtl433Tracker.Data.Migrations
                 name: "EventData");
 
             migrationBuilder.DropTable(
-                name: "Event");
+                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "Devices");
