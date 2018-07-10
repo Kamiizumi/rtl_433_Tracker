@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rtl433Tracker.Api\Rtl433Tracker.Api.csproj" />
-    <ProjectReference Include="..\Rtl433Tracker.Data\Rtl433Tracker.Data.csproj" />
   </ItemGroup>
 
 </Project>

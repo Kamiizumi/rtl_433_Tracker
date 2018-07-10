@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Rtl433Tracker.Services\Rtl433Tracker.Services.csproj" />
+  </ItemGroup>
+
 </Project>
