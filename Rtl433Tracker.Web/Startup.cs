@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rtl433Tracker.Data;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Rtl433Tracker
@@ -19,6 +21,8 @@ namespace Rtl433Tracker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<Rtl433TrackerContext>(options => options.UseSqlite("Data Source=Rtl433Tracker.db"));
 
             services.AddSwaggerGen(c =>
             {
