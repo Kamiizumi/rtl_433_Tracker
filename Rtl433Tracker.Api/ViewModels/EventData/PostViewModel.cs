@@ -1,8 +1,10 @@
 ﻿using Rtl433Tracker.Data.Models;
+using Rtl433Tracker.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Rtl433Tracker.Api.ViewModels.EventData
 {
@@ -20,15 +22,11 @@ namespace Rtl433Tracker.Api.ViewModels.EventData
         [Required]
         public IDictionary<string, string> Data { get; set; }
 
-        public Event ToDomainModel()
+        public async Task<Event> ToDomainModel(IDeviceService deviceService)
         {
             return new Event
             {
-                Device = new Device
-                {
-                    DriverModel = DriverModel,
-                    DriverId = DriverId
-                },
+                Device = await deviceService.GetOrCreateAsync(DriverModel, DriverId),
                 Time = Time.Value,
                 Data = Data.Select(eventData => new Data.Models.EventData
                 {

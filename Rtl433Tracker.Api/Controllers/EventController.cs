@@ -10,16 +10,18 @@ namespace Rtl433Tracker.Api.Controllers
     public class EventController : Controller
     {
         private readonly IEventService _eventService;
+        private readonly IDeviceService _deviceService;
 
-        public EventController(IEventService eventService)
+        public EventController(IEventService eventService, IDeviceService deviceService)
         {
             _eventService = eventService ?? throw new ArgumentNullException(nameof(eventService));
+            _deviceService = deviceService ?? throw new ArgumentNullException(nameof(deviceService));
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]PostViewModel eventVm)
         {
-            var createdGuid = await _eventService.CreateAsync(eventVm.ToDomainModel());
+            var createdGuid = await _eventService.CreateAsync(await eventVm.ToDomainModel(_deviceService));
             return Ok(createdGuid);
         }
     }

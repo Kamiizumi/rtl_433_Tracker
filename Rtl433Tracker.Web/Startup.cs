@@ -26,6 +26,7 @@ namespace Rtl433Tracker
 
             services.AddDbContext<Rtl433TrackerContext>(options => options.UseSqlite("Data Source=Rtl433Tracker.db"));
 
+            services.AddTransient<IDeviceService, DeviceService>();
             services.AddTransient<IEventService, EventService>();
 
             services.AddSwaggerGen(c =>
