@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Rtl433Tracker": {
+    "Rtl433Tracker.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Rtl433Tracker
+namespace Rtl433Tracker.Web
 {
     public class Program
     {
