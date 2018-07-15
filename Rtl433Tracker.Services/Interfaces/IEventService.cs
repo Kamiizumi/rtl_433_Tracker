@@ -4,7 +4,7 @@ using Rtl433Tracker.Data.Models;
 
 namespace Rtl433Tracker.Services.Interfaces
 {
-    public interface IEventDataService
+    public interface IEventService
     {
         Task<Guid> CreateAsync(Event eventData);
     }

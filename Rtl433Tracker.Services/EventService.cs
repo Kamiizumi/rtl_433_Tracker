@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Rtl433Tracker.Services
 {
-    public class EventDataService : IEventDataService
+    public class EventService : IEventService
     {
         private readonly Rtl433TrackerContext _rtl433TrackerContext;
 
-        public EventDataService(Rtl433TrackerContext rtl433TrackerContext)
+        public EventService(Rtl433TrackerContext rtl433TrackerContext)
         {
             _rtl433TrackerContext = rtl433TrackerContext ?? throw new ArgumentNullException(nameof(rtl433TrackerContext));
         }
