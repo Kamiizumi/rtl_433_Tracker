@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Data", "Rtl43
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Services", "Rtl433Tracker.Services\Rtl433Tracker.Services.csproj", "{AB643678-CB65-4653-8AD4-83316AA45AD7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Receiver", "Rtl433Tracker.Receiver\Rtl433Tracker.Receiver.csproj", "{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AB643678-CB65-4653-8AD4-83316AA45AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB643678-CB65-4653-8AD4-83316AA45AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB643678-CB65-4653-8AD4-83316AA45AD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Rtl433Tracker.Receiver": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
