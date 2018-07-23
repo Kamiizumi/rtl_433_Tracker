@@ -103,7 +103,7 @@ namespace Rtl433Tracker.Receiver
         /// <param name="eventArgs">Data received.</param>
         private static void OnOutputDataReceived(object sender, DataReceivedEventArgs eventArgs)
         {
-            Console.WriteLine("received output: {0}", eventArgs.Data);
+            Console.WriteLine("Received output: {0}", eventArgs.Data);
             if (string.IsNullOrWhiteSpace(eventArgs.Data) == false)
             {
                 var content = new StringContent(eventArgs.Data, Encoding.Default, "application/json");
@@ -119,7 +119,7 @@ namespace Rtl433Tracker.Receiver
         /// <param name="eventArgs">Error received.</param>
         private static void OnErrorDataReceived(object sender, DataReceivedEventArgs eventArgs)
         {
-            Console.WriteLine("received error: {0}", eventArgs.Data);
+            Console.WriteLine("Received error: {0}", eventArgs.Data);
         }
     }
 }
