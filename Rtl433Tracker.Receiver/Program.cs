@@ -16,7 +16,7 @@ namespace Rtl433Tracker.Receiver
 
         private static string _trackerPostEndpoint;
 
-        static void Main(string[] args)
+        static void Main()
         {
             LoadSettings();
 
