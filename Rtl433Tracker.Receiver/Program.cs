@@ -11,7 +11,7 @@ namespace Rtl433Tracker.Receiver
     /// <summary>
     /// Console wrapper for rtl_433 which posts receiver readings to the tracker server.
     /// </summary>
-    class Program
+    internal class Program
     {
         /// <summary>
         /// Client to use when posting data to tracker.
@@ -31,7 +31,7 @@ namespace Rtl433Tracker.Receiver
         /// <summary>
         /// Console application entry point.
         /// </summary>
-        static void Main()
+        private static void Main()
         {
             LoadSettings();
 
