@@ -40,25 +40,25 @@ namespace Rtl433Tracker.Receiver
             {
                 Console.WriteLine("STARTING PROCESS");
 
-                using (var process = new Process())
+                using (var rtl433Process = new Process())
                 {
                     // Configure the rtl_433 executable / arguments to start.
-                    process.StartInfo.FileName = _rtl433Path;
+                    rtl433Process.StartInfo.FileName = _rtl433Path;
 
                     // -F json: Format as JSON (the tracker server expects this format).
                     // -U: Use UTC timestamps.
                     // -G: Enable all decoders so we can capture as much data as possible.
                     // -q: Quiet mode, to suppress unwanted output.
-                    process.StartInfo.Arguments = "-F json -U -G -q";
+                    rtl433Process.StartInfo.Arguments = "-F json -U -G -q";
 
                     // We want to handle the process internally so don't start via the OS.
-                    process.StartInfo.UseShellExecute = false;
+                    rtl433Process.StartInfo.UseShellExecute = false;
 
                     // Redirect output so we can process readings / errors.
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.RedirectStandardError = true;
+                    rtl433Process.StartInfo.RedirectStandardOutput = true;
+                    rtl433Process.StartInfo.RedirectStandardError = true;
 
-                    process.OutputDataReceived += (sender, argss) =>
+                    rtl433Process.OutputDataReceived += (sender, argss) =>
                     {
                         Console.WriteLine("received output: {0}", argss.Data);
                         if (string.IsNullOrWhiteSpace(argss.Data) == false)
@@ -68,15 +68,15 @@ namespace Rtl433Tracker.Receiver
                             Console.WriteLine($"Request finished: Result code: {result.StatusCode}");
                         }
                     };
-                    process.ErrorDataReceived += (sender, argss) => Console.WriteLine("received error: {0}", argss.Data);
+                    rtl433Process.ErrorDataReceived += (sender, argss) => Console.WriteLine("received error: {0}", argss.Data);
 
                     // Begin the process and start listening to output.
-                    process.Start();
-                    process.BeginOutputReadLine();
-                    process.BeginErrorReadLine();
+                    rtl433Process.Start();
+                    rtl433Process.BeginOutputReadLine();
+                    rtl433Process.BeginErrorReadLine();
 
                     // Wait here for the process to end.
-                    process.WaitForExit();
+                    rtl433Process.WaitForExit();
                 }
 
                 Console.WriteLine("PROCESS ENDED Restarting in a moment...");
