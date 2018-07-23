@@ -10,8 +10,6 @@ namespace Rtl433Tracker.Receiver
 {
     class Program
     {
-        private static bool _keepRunning = true;
-
         private static HttpClient _httpClient = new HttpClient();
 
         private static string _rtl433Path;
@@ -22,9 +20,7 @@ namespace Rtl433Tracker.Receiver
         {
             LoadSettings();
 
-            Console.CancelKeyPress += (a, b) => _keepRunning = false;
-
-            while (_keepRunning)
+            while (true)
             {
                 Console.WriteLine("STARTING PROCESS");
                 using (var process = new Process())
