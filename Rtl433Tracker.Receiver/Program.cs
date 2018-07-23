@@ -69,8 +69,10 @@ namespace Rtl433Tracker.Receiver
                     rtl433Process.WaitForExit();
                 }
 
-                Console.WriteLine("PROCESS ENDED Restarting in a moment...");
-                Thread.Sleep(3000);
+                // rtl_433 ended. Restart the process after a few seconds.
+                const int restartSeconds = 3;
+                Console.WriteLine($"rtl_433 process ended. Restarting in {restartSeconds} seconds...");
+                Thread.Sleep(restartSeconds * 1000);
             }
         }
 
