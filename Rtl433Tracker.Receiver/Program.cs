@@ -38,8 +38,6 @@ namespace Rtl433Tracker.Receiver
             // Loop to restart rtl_433 should it fail.
             while (true)
             {
-                Console.WriteLine("STARTING PROCESS");
-
                 using (var rtl433Process = new Process())
                 {
                     // Configure the rtl_433 executable / arguments to start.
@@ -71,6 +69,7 @@ namespace Rtl433Tracker.Receiver
                     rtl433Process.ErrorDataReceived += (sender, argss) => Console.WriteLine("received error: {0}", argss.Data);
 
                     // Begin the process and start listening to output.
+                    Console.WriteLine("Starting rtl_433 process...");
                     rtl433Process.Start();
                     rtl433Process.BeginOutputReadLine();
                     rtl433Process.BeginErrorReadLine();
