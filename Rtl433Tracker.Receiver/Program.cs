@@ -54,19 +54,10 @@ namespace Rtl433Tracker.Receiver
 
                     // Redirect output so we can process readings / errors.
                     rtl433Process.StartInfo.RedirectStandardOutput = true;
-                    rtl433Process.StartInfo.RedirectStandardError = true;
+                    rtl433Process.OutputDataReceived += OnOutputDataReceived;
 
-                    rtl433Process.OutputDataReceived += (sender, argss) =>
-                    {
-                        Console.WriteLine("received output: {0}", argss.Data);
-                        if (string.IsNullOrWhiteSpace(argss.Data) == false)
-                        {
-                            var content = new StringContent(argss.Data, Encoding.Default, "application/json");
-                            var result = _httpClient.PostAsync(_trackerPostEndpoint, content).Result;
-                            Console.WriteLine($"Request finished: Result code: {result.StatusCode}");
-                        }
-                    };
-                    rtl433Process.ErrorDataReceived += (sender, argss) => Console.WriteLine("received error: {0}", argss.Data);
+                    rtl433Process.StartInfo.RedirectStandardError = true;
+                    rtl433Process.ErrorDataReceived += OnErrorDataReceived;
 
                     // Begin the process and start listening to output.
                     Console.WriteLine("Starting rtl_433 process...");
@@ -98,6 +89,35 @@ namespace Rtl433Tracker.Receiver
 
             _rtl433Path = configuration["rtl433Path"];
             _trackerPostEndpoint = configuration["trackerPostEndpoint"];
+
+            Console.WriteLine($"Path to rtl_433 executable: {_rtl433Path}");
+            Console.WriteLine($"URL to tracker POST endpoint: {_trackerPostEndpoint}");
+        }
+
+        /// <summary>
+        /// Event handler for when output is received from rtl_433.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="eventArgs">Data received.</param>
+        private static void OnOutputDataReceived(object sender, DataReceivedEventArgs eventArgs)
+        {
+            Console.WriteLine("received output: {0}", eventArgs.Data);
+            if (string.IsNullOrWhiteSpace(eventArgs.Data) == false)
+            {
+                var content = new StringContent(eventArgs.Data, Encoding.Default, "application/json");
+                var result = _httpClient.PostAsync(_trackerPostEndpoint, content).Result;
+                Console.WriteLine($"Request finished: Result code: {result.StatusCode}");
+            }
+        }
+
+        /// <summary>
+        /// Event handler for when errors are received from rtl_433.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="eventArgs">Error received.</param>
+        private static void OnErrorDataReceived(object sender, DataReceivedEventArgs eventArgs)
+        {
+            Console.WriteLine("received error: {0}", eventArgs.Data);
         }
     }
 }
