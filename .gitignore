@@ -5,6 +5,9 @@
 # Ignore environment appsettings
 appsettings.*.json
 
+# Ignore generated SQLite database
+Rtl433Tracker.db
+
 ##########################
 # Standard VS ignore rules
 ##########################
