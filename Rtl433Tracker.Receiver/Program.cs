@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace Rtl433Tracker.Receiver
 {
@@ -17,6 +18,11 @@ namespace Rtl433Tracker.Receiver
         /// Client to use when posting data to tracker.
         /// </summary>
         private static HttpClient _httpClient = new HttpClient();
+
+        /// <summary>
+        /// Logger to write messages to.
+        /// </summary>
+        private static ILogger _logger;
 
         /// <summary>
         /// Full path to the rtl_433 executable.
@@ -33,6 +39,8 @@ namespace Rtl433Tracker.Receiver
         /// </summary>
         private static void Main()
         {
+            // Perform initialisation.
+            InitLogging();
             LoadSettings();
 
             // Loop to restart rtl_433 should it fail.
@@ -60,7 +68,7 @@ namespace Rtl433Tracker.Receiver
                     rtl433Process.ErrorDataReceived += OnErrorDataReceived;
 
                     // Begin the process and start listening to output.
-                    Console.WriteLine("Starting rtl_433 process...");
+                    _logger.Information("Starting rtl_433 process...");
                     rtl433Process.Start();
                     rtl433Process.BeginOutputReadLine();
                     rtl433Process.BeginErrorReadLine();
@@ -71,9 +79,22 @@ namespace Rtl433Tracker.Receiver
 
                 // rtl_433 ended. Restart the process after a few seconds.
                 const int restartSeconds = 3;
-                Console.WriteLine($"rtl_433 process ended. Restarting in {restartSeconds} seconds...");
+                _logger.Error("rtl_433 process ended. Restarting in {restartSeconds} seconds...", restartSeconds);
                 Thread.Sleep(restartSeconds * 1000);
             }
+        }
+
+        /// <summary>
+        /// Initialise the logger.
+        /// </summary>
+        private static void InitLogging()
+        {
+            _logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            _logger.Information("Logging initialised");
         }
 
         /// <summary>
@@ -92,8 +113,8 @@ namespace Rtl433Tracker.Receiver
             _rtl433Path = configuration["rtl433Path"];
             _trackerPostEndpoint = configuration["trackerPostEndpoint"];
 
-            Console.WriteLine($"Path to rtl_433 executable: {_rtl433Path}");
-            Console.WriteLine($"URL to tracker POST endpoint: {_trackerPostEndpoint}");
+            _logger.Information("Path to rtl_433 executable: {rtl433Path}", _rtl433Path);
+            _logger.Information("URL to tracker POST endpoint: {trackerPostEndpoint}", _trackerPostEndpoint);
         }
 
         /// <summary>
@@ -103,12 +124,23 @@ namespace Rtl433Tracker.Receiver
         /// <param name="eventArgs">Data received.</param>
         private static void OnOutputDataReceived(object sender, DataReceivedEventArgs eventArgs)
         {
-            Console.WriteLine("Received output: {0}", eventArgs.Data);
+            _logger.Information("Received output: {data}", eventArgs.Data);
+
             if (string.IsNullOrWhiteSpace(eventArgs.Data) == false)
             {
+                _logger.Information("Posting output to endpoint...");
+
                 var content = new StringContent(eventArgs.Data, Encoding.Default, "application/json");
                 var result = _httpClient.PostAsync(_trackerPostEndpoint, content).Result;
-                Console.WriteLine($"Request finished: Result code: {result.StatusCode}");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    _logger.Information("Post successful. Result code: {resultCode}", result.StatusCode);
+                }
+                else
+                {
+                    _logger.Warning("Post failed. Result code: {resultCode}", result.StatusCode);
+                }
             }
         }
 
@@ -119,7 +151,7 @@ namespace Rtl433Tracker.Receiver
         /// <param name="eventArgs">Error received.</param>
         private static void OnErrorDataReceived(object sender, DataReceivedEventArgs eventArgs)
         {
-            Console.WriteLine("Received error: {0}", eventArgs.Data);
+            _logger.Warning("Received error: {data}", eventArgs.Data);
         }
     }
 }
