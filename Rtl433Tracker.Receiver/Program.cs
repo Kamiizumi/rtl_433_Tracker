@@ -128,18 +128,26 @@ namespace Rtl433Tracker.Receiver
 
             if (string.IsNullOrWhiteSpace(eventArgs.Data) == false)
             {
-                _logger.Information("Posting output to endpoint...");
-
-                var content = new StringContent(eventArgs.Data, Encoding.Default, "application/json");
-                var result = _httpClient.PostAsync(_trackerPostEndpoint, content).Result;
-
-                if (result.IsSuccessStatusCode)
+                // Wrap in try / catch so if something goes wrong with the request the application doesn't crash out.
+                try
                 {
-                    _logger.Information("Post successful. Result code: {resultCode}", result.StatusCode);
+                    _logger.Information("Posting output to endpoint...");
+
+                    var content = new StringContent(eventArgs.Data, Encoding.Default, "application/json");
+                    var result = _httpClient.PostAsync(_trackerPostEndpoint, content).Result;
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        _logger.Information("Post successful. Result code: {resultCode}", result.StatusCode);
+                    }
+                    else
+                    {
+                        _logger.Error("Post failed. Result code: {resultCode}", result.StatusCode);
+                    }
                 }
-                else
+                catch (Exception exception)
                 {
-                    _logger.Warning("Post failed. Result code: {resultCode}", result.StatusCode);
+                    _logger.Error(exception, "Exception occurred while posting to endpoint");
                 }
             }
         }
