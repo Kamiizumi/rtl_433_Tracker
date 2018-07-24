@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace Rtl433Tracker.Receiver
 {
@@ -17,6 +18,11 @@ namespace Rtl433Tracker.Receiver
         /// Client to use when posting data to tracker.
         /// </summary>
         private static HttpClient _httpClient = new HttpClient();
+
+        /// <summary>
+        /// Logger to write messages to.
+        /// </summary>
+        private static ILogger _logger;
 
         /// <summary>
         /// Full path to the rtl_433 executable.
@@ -33,6 +39,8 @@ namespace Rtl433Tracker.Receiver
         /// </summary>
         private static void Main()
         {
+            // Perform initialisation.
+            InitLogging();
             LoadSettings();
 
             // Loop to restart rtl_433 should it fail.
@@ -74,6 +82,18 @@ namespace Rtl433Tracker.Receiver
                 Console.WriteLine($"rtl_433 process ended. Restarting in {restartSeconds} seconds...");
                 Thread.Sleep(restartSeconds * 1000);
             }
+        }
+
+        /// <summary>
+        /// Initialise the logger.
+        /// </summary>
+        private static void InitLogging()
+        {
+            _logger = new LoggerConfiguration()
+                .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            _logger.Information("Logging initialised");
         }
 
         /// <summary>
