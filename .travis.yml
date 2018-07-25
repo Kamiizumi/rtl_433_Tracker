@@ -6,3 +6,11 @@ env:
   - RUNTIME=linux-arm
 script: 
   - dotnet publish Rtl433Tracker.Receiver/Rtl433Tracker.Receiver.csproj -r ${RUNTIME}
+deploy:
+  provider: releases
+  api_key:
+    secure: nMfyg0QGx2xBoNDsLpuhzwu4VfnscN9VjMfVTFd8fwQkXyVagoWrduGA3qQ54hqrtRkoOHiJhcLwFWpmNwffsdYg6DgaBtnT6SzFXwGqZLYYnLzjOGzxNDZ/N1QjjQS9Pcjl0SGVpFKR/yzN+vj7wNviIpF9l669abGLmVup+bNTVkuk9hlVz0HYL4DzISFo67DP5d0v3C/7jN1AmEGgD7usof/MWj9L1tmn7nWkHY3hEv9dr6BnDrhaR3d0a1RqXegtBVyABmSJgJ7E79BDCCfFqwvcDsQfpa1L9jfQT2mkSEi71GQL4QpxpZl44soIfPnIqzDGzSORHnf+3wEOQHi1aJBDYlL8PFdsX/URH13GdZcLQZOlecRD+UtA1NUwG/okYixcqgrkmmyImARzAPP6lAE/DISZwUtShaM7R7MfrYjDppbrqwfHnvTgFlD0Ub4mmpyu2RlpMRDlouk2K29BfnvKOIzuSpk+oVzDZEQYQRtkS3ovG2ootwrHrZpxkBvGnLqGol2dZAtlIo2ZXDdGBPZ4RwE2VdF7y/J21nhCJm+WE9ZV+5/Zg4fyF5c6lzKZHuxjdWLOXpmCqJ033XGcsnYHrUgUXDrB5zQrd8IQf7Z7JvhQExEt2KU9TEYaE2FeSBv52r5k2lVkzdPmcd5q8YQ1oZLxWSV3syp0CZw=
+  file: Rtl433Tracker.Receiver/bin/Debug/netcoreapp2.1/win10-x64/publish/Rtl433Tracker.Receiver.exe
+  on:
+    repo: Kamiizumi/Rtl433Tracker
+    branch: travis
