@@ -1,5 +1,8 @@
 language: csharp
 mono: none
 dotnet: 2.1.302
+env:
+  - RUNTIME=win10-x64
+  - RUNTIME=linux-arm
 script: 
-  - dotnet publish Rtl433Tracker.Receiver/Rtl433Tracker.Receiver.csproj
+  - dotnet publish Rtl433Tracker.Receiver/Rtl433Tracker.Receiver.csproj -r ${RUNTIME}
