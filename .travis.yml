@@ -1,6 +1,5 @@
 language: csharp
 mono: none
 dotnet: 2.1.302
-solution: Rtl33Tracker.sln
 script: 
-  - dotnet publish
+  - dotnet publish Rtl433Tracker.Receiver/Rtl433Tracker.Receiver.csproj
