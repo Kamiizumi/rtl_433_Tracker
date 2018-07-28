@@ -9,7 +9,7 @@ using Rtl433Tracker.Data;
 namespace Rtl433Tracker.Data.Migrations
 {
     [DbContext(typeof(Rtl433TrackerContext))]
-    [Migration("20180710214403_Initial")]
+    [Migration("20180728193448_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,8 +23,7 @@ namespace Rtl433Tracker.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DriverId")
-                        .IsRequired();
+                    b.Property<string>("DriverId");
 
                     b.Property<string>("DriverModel")
                         .IsRequired();

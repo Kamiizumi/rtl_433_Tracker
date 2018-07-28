@@ -12,7 +12,6 @@ namespace Rtl433Tracker.Data.Models
         [Required]
         public string DriverModel { get; set; }
 
-        [Required]
         public string DriverId { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
