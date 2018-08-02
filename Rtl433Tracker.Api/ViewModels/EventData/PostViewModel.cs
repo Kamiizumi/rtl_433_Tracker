@@ -13,7 +13,6 @@ namespace Rtl433Tracker.Api.ViewModels.EventData
         [Required]
         public string DriverModel { get; set; }
 
-        [Required]
         public string DriverId { get; set; }
 
         [Required]
