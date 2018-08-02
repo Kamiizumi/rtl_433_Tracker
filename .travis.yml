@@ -24,4 +24,4 @@ jobs:
         skip_cleanup: true
         on:
           repo: Kamiizumi/Rtl433Tracker
-          branch: travis
+          branch: master
