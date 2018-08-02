@@ -21,8 +21,7 @@ namespace Rtl433Tracker.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DriverId")
-                        .IsRequired();
+                    b.Property<string>("DriverId");
 
                     b.Property<string>("DriverModel")
                         .IsRequired();

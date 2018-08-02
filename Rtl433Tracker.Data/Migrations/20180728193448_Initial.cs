@@ -13,7 +13,7 @@ namespace Rtl433Tracker.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DriverModel = table.Column<string>(nullable: false),
-                    DriverId = table.Column<string>(nullable: false)
+                    DriverId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
