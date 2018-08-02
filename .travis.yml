@@ -11,6 +11,11 @@ script:
 jobs:
   include:
     - stage: deploy
+      before_deploy:
+        script:
+          - git config --local user.name "Travis Build"
+          - git config --local user.email "travis@build"
+          - git tag "$(TRAVIS_BUILD_NUMBER)"
       deploy:
         provider: releases
         api_key:
