@@ -1,0 +1,41 @@
+﻿@using Rtl433Tracker.Api.Models.DataTransferObjects.Events
+@page "/latestEvents"
+@inject HttpClient Http
+
+<h1>Latest Events</h1>
+
+@if (_eventDetails == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Model</th>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var eventDetail in _eventDetails)
+            {
+                <tr>
+                    <td>@eventDetail.Time</td>
+                    <td>@eventDetail.DriverModel</td>
+                    <td>@eventDetail.DriverId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+    private IEnumerable<EventDetails> _eventDetails;
+
+    protected override async Task OnInitAsync()
+    {
+        _eventDetails = await Http.GetJsonAsync<IEnumerable<EventDetails>>("api/Event/");
+    }
+}
