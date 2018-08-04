@@ -1,4 +1,5 @@
-﻿var gulp = require('gulp');
+/// <binding BeforeBuild='build' Clean='clean' />
+var gulp = require('gulp');
 var del = require('del');
 
 function clean() {
@@ -10,4 +11,5 @@ function libs() {
         .pipe(gulp.dest('wwwroot/libs'));
 };
 
+exports.clean = clean;
 exports.build = gulp.series(clean, libs);
