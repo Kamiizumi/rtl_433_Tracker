@@ -50,6 +50,8 @@ namespace Rtl433Tracker.Web
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "rtl_433 Tracker API V1");
             });
+
+            app.UseBlazor<Client.Program>();
         }
     }
 }
