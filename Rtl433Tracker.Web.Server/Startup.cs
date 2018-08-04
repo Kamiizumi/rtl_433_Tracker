@@ -8,7 +8,7 @@ using Rtl433Tracker.Services;
 using Rtl433Tracker.Services.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace Rtl433Tracker.Web
+namespace Rtl433Tracker.Web.Server
 {
     public class Startup
     {

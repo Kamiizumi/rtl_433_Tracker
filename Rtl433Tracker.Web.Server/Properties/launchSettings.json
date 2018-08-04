@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Rtl433Tracker.Web": {
+    "Rtl433Tracker.Web.Server": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
