@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rtl433Tracker.Api.Models\Rtl433Tracker.Api.Models.csproj" />
     <ProjectReference Include="..\Rtl433Tracker.Services\Rtl433Tracker.Services.csproj" />
   </ItemGroup>
 
