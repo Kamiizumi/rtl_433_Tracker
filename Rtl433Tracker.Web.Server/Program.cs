@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Rtl433Tracker.Data;
 
-namespace Rtl433Tracker.Web
+namespace Rtl433Tracker.Web.Server
 {
     public class Program
     {

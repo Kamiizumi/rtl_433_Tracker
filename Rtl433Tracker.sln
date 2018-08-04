@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Web", "Rtl433Tracker.Web\Rtl433Tracker.Web.csproj", "{C85AFFCF-E356-4D67-925F-2E0726F9B358}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Web.Server", "Rtl433Tracker.Web.Server\Rtl433Tracker.Web.Server.csproj", "{C85AFFCF-E356-4D67-925F-2E0726F9B358}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Api", "Rtl433Tracker.Api\Rtl433Tracker.Api.csproj", "{94A6E5DE-079A-49B0-8AB7-88C563A6CE81}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Services", "Rtl433Tracker.Services\Rtl433Tracker.Services.csproj", "{AB643678-CB65-4653-8AD4-83316AA45AD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Receiver", "Rtl433Tracker.Receiver\Rtl433Tracker.Receiver.csproj", "{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtl433Tracker.Web.Client", "Rtl433Tracker.Web.Client\Rtl433Tracker.Web.Client.csproj", "{E10E24C6-CEA5-4DBF-B63E-8847FEA439D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A41B73B7-5716-420B-ACA0-CFC9A18ACA75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E10E24C6-CEA5-4DBF-B63E-8847FEA439D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E10E24C6-CEA5-4DBF-B63E-8847FEA439D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E10E24C6-CEA5-4DBF-B63E-8847FEA439D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E10E24C6-CEA5-4DBF-B63E-8847FEA439D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

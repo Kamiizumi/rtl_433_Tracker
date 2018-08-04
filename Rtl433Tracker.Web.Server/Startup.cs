@@ -8,7 +8,7 @@ using Rtl433Tracker.Services;
 using Rtl433Tracker.Services.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace Rtl433Tracker.Web
+namespace Rtl433Tracker.Web.Server
 {
     public class Startup
     {
@@ -50,6 +50,8 @@ namespace Rtl433Tracker.Web
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "rtl_433 Tracker API V1");
             });
+
+            app.UseBlazor<Client.Program>();
         }
     }
 }
