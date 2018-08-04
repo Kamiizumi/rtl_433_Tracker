@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Rtl433Tracker.Api.Models\Rtl433Tracker.Api.Models.csproj" />
+  </ItemGroup>
+
 </Project>

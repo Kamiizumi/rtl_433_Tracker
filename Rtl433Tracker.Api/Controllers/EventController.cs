@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Rtl433Tracker.Api.Models.DataTransferObjects.Events;
 using Rtl433Tracker.Api.ViewModels.EventData;
 using Rtl433Tracker.Services.Interfaces;
 using System;
@@ -18,6 +19,25 @@ namespace Rtl433Tracker.Api.Controllers
         {
             _eventService = eventService ?? throw new ArgumentNullException(nameof(eventService));
             _deviceService = deviceService ?? throw new ArgumentNullException(nameof(deviceService));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var eventDetails = _eventService
+                .GetEvents()
+                .OrderByDescending(singleEvent => singleEvent.Time)
+                .Take(100)
+                .Select(singleEvent => new EventDetails
+                {
+                    Id = singleEvent.Id,
+                    Time = singleEvent.Time,
+                    DeviceId = singleEvent.Device.Id,
+                    DriverModel = singleEvent.Device.DriverModel,
+                    DriverId = singleEvent.Device.DriverId
+                });
+
+            return new OkObjectResult(eventDetails);
         }
 
         [HttpPost]

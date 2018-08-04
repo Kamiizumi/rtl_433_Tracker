@@ -2,6 +2,7 @@
 using Rtl433Tracker.Data.Models;
 using Rtl433Tracker.Services.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Rtl433Tracker.Services
@@ -13,6 +14,11 @@ namespace Rtl433Tracker.Services
         public EventService(Rtl433TrackerContext rtl433TrackerContext)
         {
             _rtl433TrackerContext = rtl433TrackerContext ?? throw new ArgumentNullException(nameof(rtl433TrackerContext));
+        }
+
+        public IQueryable<Event> GetEvents()
+        {
+            return _rtl433TrackerContext.Events;
         }
 
         public async Task<Guid> CreateAsync(Event eventData)
