@@ -8,6 +8,9 @@ appsettings.*.json
 # Ignore generated SQLite database
 Rtl433Tracker.db
 
+# Ignore web deps installed via npm / gulp
+**/wwwroot/libs/
+
 ##########################
 # Standard VS ignore rules
 ##########################
