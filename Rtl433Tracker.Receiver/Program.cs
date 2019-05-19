@@ -55,7 +55,7 @@ namespace Rtl433Tracker.Receiver
                     // -U: Use UTC timestamps.
                     // -G: Enable all decoders so we can capture as much data as possible.
                     // -q: Quiet mode, to suppress unwanted output.
-                    rtl433Process.StartInfo.Arguments = "-F json -U -G -q";
+                    rtl433Process.StartInfo.Arguments = "-F json -M utc -G -q";
 
                     // We want to handle the process internally so don't start via the OS.
                     rtl433Process.StartInfo.UseShellExecute = false;
