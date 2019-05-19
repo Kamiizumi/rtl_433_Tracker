@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using System.Web;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
 
 namespace Rtl433Tracker.Receiver
@@ -33,6 +38,10 @@ namespace Rtl433Tracker.Receiver
         /// URL to the tracker endpoint to post readings to.
         /// </summary>
         private static string _trackerPostEndpoint;
+
+        private static string _wundergroundId;
+
+        private static string _wundergroundPassword;
 
         /// <summary>
         /// Console application entry point.
@@ -113,6 +122,9 @@ namespace Rtl433Tracker.Receiver
             _rtl433Path = configuration["rtl433Path"];
             _trackerPostEndpoint = configuration["trackerPostEndpoint"];
 
+            _wundergroundId = configuration["wundergroundId"];
+            _wundergroundPassword = configuration["wundergroundPassword"];
+
             _logger.Information("Path to rtl_433 executable: {rtl433Path}", _rtl433Path);
             _logger.Information("URL to tracker POST endpoint: {trackerPostEndpoint}", _trackerPostEndpoint);
         }
@@ -139,6 +151,12 @@ namespace Rtl433Tracker.Receiver
                     if (result.IsSuccessStatusCode)
                     {
                         _logger.Information("Post successful. Result code: {resultCode}", result.StatusCode);
+
+                        if(eventArgs.Data.Contains("\"model\" : \"Fine Offset WH1050 weather station\", \"id\" : 254"))
+                        {
+                            _logger.Information("Detected weather station reading...");
+                            WundergroundPost(eventArgs.Data);
+                        }
                     }
                     else
                     {
@@ -148,6 +166,43 @@ namespace Rtl433Tracker.Receiver
                 catch (Exception exception)
                 {
                     _logger.Error(exception, "Exception occurred while posting to endpoint");
+                }
+            }
+        }
+
+        private static void WundergroundPost(string data)
+        {
+            var a = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+
+            var wundergroundData = new
+            {
+                dateutc = a["time"],
+                windspeedmph = (double)a["speed"] / 1.609344,
+                windgustmph = (double)a["gust"] / 1.609344,
+                humidity = a["humidity"],
+                tempf = ((double)a["temperature_C"] * 9/5) + 32,
+            };
+
+            var wundergroundUrl = $"https://weatherstation.wunderground.com/weatherstation/updateweatherstation.php" +
+                $"?action=updateraw" +
+                $"&ID={_wundergroundId}" +
+                $"&PASSWORD={_wundergroundPassword}" +
+                $"&dateutc={HttpUtility.UrlEncode((string)wundergroundData.dateutc)}" +
+                $"&windspeedmph={wundergroundData.windspeedmph}" +
+                $"&windgustmph={wundergroundData.windgustmph}" +
+                $"&humidity={wundergroundData.humidity}" +
+                $"&tempf={wundergroundData.tempf}";
+
+            _logger.Information($"Sending to Wunderground({wundergroundUrl})...");
+            var request = (HttpWebRequest)WebRequest.Create(wundergroundUrl);
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                if(response.StatusCode == HttpStatusCode.OK)
+                {
+                    _logger.Information("Successfully sent to Wunderground.");
+                }
+                else{
+                    _logger.Warning($"Failed to send to Wunderground. Response code: {response.StatusCode}");
                 }
             }
         }
