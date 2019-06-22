@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using Microsoft.Extensions.Configuration;
+using MQTTnet;
+using MQTTnet.Client.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
@@ -42,6 +44,10 @@ namespace Rtl433Tracker.Receiver
         private static string _wundergroundId;
 
         private static string _wundergroundPassword;
+
+        private static string _mqttHost;
+
+        private static string _mqttTopic;
 
         /// <summary>
         /// Console application entry point.
@@ -125,6 +131,9 @@ namespace Rtl433Tracker.Receiver
             _wundergroundId = configuration["wundergroundId"];
             _wundergroundPassword = configuration["wundergroundPassword"];
 
+            _mqttHost = configuration["mqttHost"];
+            _mqttTopic = configuration["mqttTopic"];
+
             _logger.Information("Path to rtl_433 executable: {rtl433Path}", _rtl433Path);
             _logger.Information("URL to tracker POST endpoint: {trackerPostEndpoint}", _trackerPostEndpoint);
         }
@@ -167,18 +176,42 @@ namespace Rtl433Tracker.Receiver
                 {
                     _logger.Error(exception, "Exception occurred while posting to endpoint");
                 }
+
+                try
+                {
+                    _logger.Information("Posting to MQTT broker...");
+
+                    var factory = new MqttFactory();
+                    var mqttClient = factory.CreateMqttClient();
+
+                    var mqttOptions = new MqttClientOptionsBuilder()
+                        .WithTcpServer(_mqttHost)
+                        .Build();
+
+                    mqttClient.ConnectAsync(mqttOptions, new CancellationToken()).Wait();
+
+                    var message = new MqttApplicationMessageBuilder()
+                        .WithTopic(_mqttTopic)
+                        .WithPayload(eventArgs.Data)
+                        .Build();
+
+                    mqttClient.PublishAsync(message, new CancellationToken()).Wait();
+
+                    _logger.Information("Published to MQTT broker.");
+                }
+                catch (Exception exception)
+                {
+                    _logger.Error(exception, "Exception occurred while publishing to MQTT broker");
+                }
             }
         }
 
         private static void WundergroundPost(string data)
         {
             var a = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
-            
+
             var wundergroundData = new
             {
-                action = "updateraw",
-                ID = "IBRETFOR4",
-                PASSWORD = "aeshs8jn",
                 dateutc = a["time"],
                 windspeedmph = (double)a["speed"] / 1.609344,
                 windgustmph = (double)a["gust"] / 1.609344,
